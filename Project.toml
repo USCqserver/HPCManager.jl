@@ -1,5 +1,5 @@
 authors = ["Sandy <neversakura@hotmail.com>"]
-name = "HPCManager.jl"
+name = "HPCManager"
 uuid = "9189bd7a-dcb8-11e8-0bde-d793f485bd6e"
 version = "0.1.0"
 
