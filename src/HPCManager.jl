@@ -46,7 +46,7 @@ function get_node_list()
         raw_str = split(raw_str, ',')
         res = []
         for str_iter in raw_str
-            if contains(str_iter, "-")
+            if occursin("-", str_iter)
                 sp = split(str_iter, '-')
                 st = parse(Int, sp[1])
                 en = parse(Int, sp[2])
@@ -67,7 +67,7 @@ function get_task_per_node()
     res = []
     raw_str = split(tpn,',')
     for str_iter in raw_str
-        if contains(str_iter, "x")
+        if occursin("x", str_iter)
             x_idx = search(str_iter,'x')
             str = str_iter[1:x_idx-2]
             num = parse(Int, str_iter[x_idx+1:end-1])
