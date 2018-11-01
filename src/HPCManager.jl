@@ -1,4 +1,4 @@
-module HPCManager.jl
+module HPCManager
 
 export init_cluster, close_workers
 
