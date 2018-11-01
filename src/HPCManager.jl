@@ -1,7 +1,8 @@
 module HPCManager
 
+using Reexport
+@reexport using Distributed
 export init_cluster, close_workers
-using Distributed
 
 function init_cluster()
     host_name = gethostname()
