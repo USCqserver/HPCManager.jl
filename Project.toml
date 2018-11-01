@@ -1,6 +1,7 @@
-authors = ["Sandy <neversakura@hotmail.com>"]
 name = "HPCManager"
 uuid = "9189bd7a-dcb8-11e8-0bde-d793f485bd6e"
+authors = ["Sandy <neversakura@hotmail.com>"]
 version = "0.1.0"
 
 [deps]
+Distributed = "8ba89e20-285c-5b6f-9357-94700520ee1b"
