@@ -70,7 +70,7 @@ function get_task_per_node()
     raw_str = split(tpn,',')
     for str_iter in raw_str
         if occursin("x", str_iter)
-            x_idx = search(str_iter,'x')
+            x_idx = findfirst(isequal('x'), str_iter)
             str = str_iter[1:x_idx-2]
             num = parse(Int, str_iter[x_idx+1:end-1])
             for i in 1:num
