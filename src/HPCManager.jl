@@ -53,7 +53,7 @@ function get_node_list()
                 st = parse(Int, sp[1])
                 en = parse(Int, sp[2])
                 for n in st:en
-                    push!(res, "hpc"*lpad(n,4,0))
+                    push!(res, "hpc"*lpad(n,4,'0'))
                 end
             else
                 push!(res, "hpc"*str_iter)
