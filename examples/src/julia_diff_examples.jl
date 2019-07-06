@@ -7,6 +7,6 @@ prob = ODEProblem((u,p,t)->1.01u,0.5,(0.0,1.0))
 end
 
 monte_prob = MonteCarloProblem(prob,prob_func=prob_func)
-sim = solve(monte_prob,Tsit5(),num_monte=100)
+sim = solve(monte_prob,Tsit5(),trajectories=100)
 
 @info "Simulation finished!"
