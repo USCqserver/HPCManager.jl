@@ -4,15 +4,28 @@ using Reexport
 @reexport using Distributed
 export init_cluster, close_workers
 
-function init_cluster()
+function init_cluster(method=:worker_per_task; kwargs...)
     host_name = gethostname()
     node_list = get_node_list()
     tpn = get_task_per_node()
     tpn = [parse(Int, i) for i in tpn]
-    if length(node_list) == 1
+    if (length(node_list) == 1) && (method == :worker_per_node)
+		@info "Only one nodes exists, skip cluster initialization."
+		nothing
+	elseif (length(node_list) == 1) && (method == :worker_per_task)
         @info "Task is assigned to a single node. Starting with local manager..."
-        addprocs(tpn[1]-1)
-    else
+        addprocs(tpn[1]-1; kwargs...)
+	elseif (length(node_list) > 1) && (method == :worker_per_node)
+		machine = []
+		for i in node_list
+			if i[1] != host_name
+				push!(machine, i)
+			end
+		end
+		@info "Task is assigned to multiple nodes. Starting with SSH manager..."
+		@info "Machine configuration: " machine
+		addprocs(machine; kwargs...)
+    elseif (length(node_list) > 1) && (method == :worker_per_task)
         if length(tpn) == 1
             tpn = fill(tpn[1], length(node_list))
         end
@@ -26,7 +39,7 @@ function init_cluster()
         end
         @info "Task is assigned to multiple nodes. Starting with SSH manager..."
         @info "Machine configuration: " machine
-        addprocs(machine)
+        addprocs(machine; kwargs...)
     end
 end
 
