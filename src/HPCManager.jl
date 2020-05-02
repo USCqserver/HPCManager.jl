@@ -14,16 +14,11 @@ function init_cluster(method = :worker_per_task; kwargs...)
         nothing
     elseif (length(node_list) == 1) && (method == :worker_per_task)
         @info "Task is assigned to a single node. Starting with local manager..."
-        addprocs(tpn[1] - 1; kwargs...)
+        addprocs(tpn[1]; kwargs...)
     elseif (length(node_list) > 1) && (method == :worker_per_node)
         machine = []
         for i in zip(node_list, tpn)
-            if i[1] == host_name
-                num = i[2] > 1 ? 1 : 0
-                push!(machine, (i[1], num))
-            else
-                push!(machine, (i[1], 1))
-            end
+            push!(machine, (i[1], 1))
         end
         @info "Task is assigned to multiple nodes. Starting with SSH manager..."
         @info "Machine configuration: " machine
@@ -34,11 +29,7 @@ function init_cluster(method = :worker_per_task; kwargs...)
         end
         machine = []
         for i in zip(node_list, tpn)
-            if i[1] == host_name
-                push!(machine, (i[1], i[2] - 1))
-            else
-                push!(machine, i)
-            end
+            push!(machine, i)
         end
         @info "Task is assigned to multiple nodes. Starting with SSH manager..."
         @info "Machine configuration: " machine
