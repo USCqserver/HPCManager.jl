@@ -53,6 +53,7 @@ function get_node_list()
     if re === nothing
         return [slurm_node]
     else
+        header = slurm_node[1:re.offset-1]
         raw_str = strip(re.match, ['[', ']'])
         raw_str = split(raw_str, ',')
         res = []
@@ -62,10 +63,10 @@ function get_node_list()
                 st = parse(Int, sp[1])
                 en = parse(Int, sp[2])
                 for n = st:en
-                    push!(res, "hpc" * lpad(n, 4, '0'))
+                    push!(res, header * lpad(n, 2, '0'))
                 end
             else
-                push!(res, "hpc" * str_iter)
+                push!(res, header * str_iter)
             end
         end
         return res
